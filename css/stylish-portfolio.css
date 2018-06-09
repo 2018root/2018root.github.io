@@ -358,6 +358,10 @@ a:hover, a:focus, a:active {
   background-color: #1D809F !important;
 }
 
+.bg-red {
+  background-color: #F3BB1D !important;
+}
+
 .text-primary {
   color: #1D809F !important;
 }
