@@ -79,134 +79,39 @@
       <hr>
   		<p class="h1 text-center">들어간 코드 및 부품</p>
   		<div class="text-center mt-3">
-  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseHTML5" aria-expanded="false" aria-controls="collapseC">C</button>
-  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseCSS3" aria-expanded="false" aria-controls="collapseJava">Python</button>
-  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseJS" aria-expanded="false" aria-controls="collapsePython">arduino</button>
+  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseArduino" aria-expanded="false" aria-controls="collapsePython">arduino</button>
   		</div>
-  		<div class="collapse" id="collapseHTML5">
+  		<div class="collapse" id="collapseArduino">
   			<pre>
-  				<code class="HTML5">
-            (function($) {
-              use strict;
+  				<code class="C++">
+#include &lt;Keypad.h&gt;
+#include &lt;Keyboard.h&gt;
 
+const byte ROWS= 4;
+const byte COLS = 4;
+char keys[ROWS][COLS] = {
+  {'1','2','3','4'},
+  {'5','6','7','8'},
+  {'9','0','a','b'},
+  {'c','d','e','f'}
+};
+byte rowPins[ROWS] = {7, 8, 9, 10};
+byte colPins[COLS] = {6, 5, 3, 2};
 
-              $(.menu-toggle).click(function(e) {
-                e.preventDefault();
-                $(#sidebar-wrapper).toggleClass(active);
-                $(.menu-toggle  .fa-bars, .menu-toggle  .fa-times).toggleClass(fa-bars fa-times);
-                $(this).toggleClass(active);
-              });
+Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
+void setup() {
+  Serial.begin(9600);
+  Keyboard.begin();
+}
 
-              $('a.js-scroll-trigger[href=#]not([href=#])').click(function() {
-                if (location.pathname.replace(^, '') == this.pathname.replace(^, '') && location.hostname == this.hostname) {
-                  var target = $(this.hash);
-                  target = target.length  target  $('[name=' + this.hash.slice(1) + ']');
-                  if (target.length) {
-                    $('html, body').animate({
-                      scrollTop target.offset().top
-                    }, 1000, easeInOutExpo);
-                    return false;
-                  }
-                }
-              });
+void loop() {
+  char key = keypad.getKey();
 
-
-              $('#sidebar-wrapper .js-scroll-trigger').click(function() {
-                $(#sidebar-wrapper).removeClass(active);
-                $(.menu-toggle).removeClass(active);
-                $(.menu-toggle  .fa-bars, .menu-toggle  .fa-times).toggleClass(fa-bars fa-times);
-              });
-
-              $(document).scroll(function() {
-                var scrollDistance = $(this).scrollTop();
-                if (scrollDistance  100) {
-                  $('.scroll-to-top').fadeIn();
-                } else {
-                  $('.scroll-to-top').fadeOut();
-                }
-              });
-
-            })(jQuery);
-
-            var onMapMouseleaveHandler = function(event) {
-              var that = $(this);
-              that.on('click', onMapClickHandler);
-              that.off('mouseleave', onMapMouseleaveHandler);
-              that.find('iframe').css(pointer-events, none);
-            }
-            var onMapClickHandler = function(event) {
-              var that = $(this);
-              that.off('click', onMapClickHandler);
-              that.find('iframe').css(pointer-events, auto);
-              that.on('mouseleave', onMapMouseleaveHandler);
-            }
-            $('.map').on('click', onMapClickHandler);
-
-  				</code>
-  			</pre>
-  		</div>
-      <div class="collapse" id="collapseCSS3">
-        <pre>
-          <code class="CSS3">
-            .thumbnail {
-                position relative;
-            }
-
-            .caption {
-                position absolute;
-                top 45%;
-                left 0;
-                width 100%;
-            }
-
-            .spacer {
-              padding-top 30px;
-              padding-bottom 30px
-             }  				</code>
-        </pre>
-      </div>
-  		<div class="collapse" id="collapseJS">
-  			<pre>
-  				<code class="JavaScript">
-            &lt;footer class=footer text-center&gt;
-              &lt;div class=container&gt;
-                &lt;ul class=list-inline mb-5&gt;
-                  &lt;li class=list-inline-item&gt;
-                    &lt;a class=social-link rounded-circle text-white mr-3 href=#&gt;
-                      &lt;i class=icon-social-facebook&gt;&lt;i&gt;
-                    &lt;a&gt;
-                  &lt;li&gt;
-                  &lt;li class=list-inline-item&gt;
-                    &lt;a class=social-link rounded-circle text-white mr-3 href=#&gt;
-                      &lt;i class=icon-social-twitter&gt;&lt;i&gt;
-                    &lt;a&gt;
-                  &lt;li&gt;
-                  &lt;li class=list-inline-item&gt;
-                    &lt;a class=social-link rounded-circle text-white href=#&gt;
-                      &lt;i class=icon-social-github&gt;&lt;i&gt;
-                    &lt;a&gt;
-                  &lt;li&gt;
-                &lt;ul&gt;
-                &lt;p class=text-muted small mb-0&gt;Copyright &copy; Your Website 2017&lt;p&gt;
-              &lt;div&gt;
-            &lt;footer&gt;
-  				</code>
-  			</pre>
-  		</div>
-  		<div class="collapse" id="collapseHTML">
-  			<pre>
-  				<code class="HTML">
-  	&lt;!DOCTYPE HTML&gt;
-  	&lt;html&gt;
-  		&lt;head&gt;
-  			&lt;meta charset="utf-8"&gt;
-  			&lt;title&gt;Hello world!&lt;/title&gt;
-  		&lt;/head&gt;
-  		&lt;body&gt;
-  			&lt;h1&gt;Hello world!&lt;/h1&gt;
-  		&lt;/body&gt;
-  	&lt;/html&gt;
+  if (key) {
+    Keyboard.write(key);
+  }
+}
   				</code>
   			</pre>
   		</div>
@@ -232,7 +137,7 @@
               </a>
             </div>
             <div class="col-lg-6">
-              <a class="portfolio-item" data-toggle="modal" data-target="#project2-content">
+              <a class="portfolio-item" href="project2.html">
                 <span class="caption">
                   <span class="caption-content">
                     <h2>keyboard Project</h2>
@@ -243,7 +148,7 @@
               </a>
             </div>
             <div class="col-lg-6">
-              <a class="portfolio-item" data-toggle="modal" data-target="#project3-content">
+              <a class="portfolio-item" href="project3.html">
                 <span class="caption">
                   <span class="caption-content">
                     <h2>Trashcan Project</h2>
@@ -254,7 +159,7 @@
               </a>
             </div>
             <div class="col-lg-6">
-              <a class="portfolio-item" data-toggle="modal" data-target="#project4-content">
+              <a class="portfolio-item" href="project4.html">
                 <span class="caption">
                   <span class="caption-content">
                     <h2>Trashcan Project</h2>
