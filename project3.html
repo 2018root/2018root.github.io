@@ -43,9 +43,6 @@
  				<li class="nav-item active">
  					<a class="nav-link" href="students.html">기수별 학생명단</a>
  				</li>
- 				<li class="nav-item active">
- 					<a class="nav-link" href="https://www.youtube.com/watch?v=kUQz87TMHZM">코드소개</a>
- 				</li>
  			</ul>
  		</div>
  	</nav>
@@ -73,8 +70,25 @@
            <p class="lead mb-1">아두이노 복호화툴의 원리</p>
            <ol>
              <li>오렌지보드를 이용하여 Master device와 Slave device를 선정
-                 <img src="img/20181213_210747.jpg" alt=""></li>
-             <li>복호화가 Master device에서 실행되지 않고 Slave device에서 실행됨</li>
+                 <img src="img/20181213_210747.jpg" alt="">
+                 <br>
+             </li>
+             <li>복호화가 Master device에서 실행되지 않고 Slave device에서 실행됨
+                 <img src="img/Master.png" alt="">
+                 <br>
+                 <img src="img/slave1.png" alt="">
+                 <br>
+                 Master device에서 cpu를 먹지 않고 Slave device에서 cpu를 먹음
+                 <br>
+             </li>
+             <li>Slave에 저장된 값만큼 Master에서 지정한 값을 뒤로 미뤄 아스키 코드를 이용해 전송
+               <img src="img/decryption.png" alt="">
+               복호화가 진행되어 Master진행값이 계속 아스키코드 값에 1씩 증가하여 더해지며 전송됨
+             </li>
+             <li>
+               아스키 코드값들은 다음과 같다
+               <img src="img/AsciiCode.PNG" alt="">
+             </li>
            </ol>
          </div>
        </div>
@@ -85,7 +99,8 @@
      <div class="container text-center">
        <div class="row">
          <div class="col-lg-10 mx-auto">
-           <h2>내용</h2>
+          <h3 class="text-secondary mb-0">Picture</h3>
+           <h2>활동사진</h2>
            <div class="container mb-5">
              <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
                <ol class="carousel-indicators">
@@ -95,18 +110,17 @@
                </ol>
                <div class="carousel-inner">
                  <div class="carousel-item active">
-                   <img class="d-block w-100" src="img/portfolio-1.jpg" alt="First slide">
+                   <img class="d-block w-100" src="img/20181212_203637.jpg" alt="First slide">
                  </div>
                  <div class="carousel-item">
-                   <img class="d-block w-100" src="img/portfolio-2.jpg" alt="Second slide">
+                   <img class="d-block w-100" src="img/20181212_203821.jpg" alt="Second slide">
                  </div>
                  <div class="carousel-item">
-                   <img class="d-block w-100" src="img/portfolio-3.jpg" alt="Third slide">
+                   <img class="d-block w-100" src="img/20181212_204000.jpg" alt="Third slide">
                  </div>
                </div>
              </div>
            </div>
-           <p class="lead mb-1"> 내용 </p>
          </div>
        </div>
      </div>
@@ -116,101 +130,118 @@
 
     <div class="container">
       <hr>
-  		<p class="h1 text-center">들어간 코드 및 부품</p>
+      <h3 class="text-secondary mb-0 h3 text-center">Code</h3>
+  		<p class="h1 text-center">들어간코드</p>
   		<div class="text-center mt-3">
-  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseArduino" aria-expanded="false" aria-controls="collapsePython">arduino cord</button>
-  		</div>
-  		<div class="collapse" id="collapseArduino">
+  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="false" aria-controls="collapsePython">MaterCode</button>
+  			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseSlave" aria-expanded="false" aria-controls="collapsePython">SlaveCode</button>
+      </div>
+  		<div class="collapse" id="collapseMaster">
   			<pre>
   				<code class="C++">
-#include &lt;Keypad.h&gt;
-#include &lt;Keyboard.h&gt;
-
-const byte ROWS= 4;
-const byte COLS = 4;
-char keys[ROWS][COLS] = {
-  {'1','2','3','4'},
-  {'5','6','7','8'},
-  {'9','0','a','b'},
-  {'c','d','e','f'}
-};
-byte rowPins[ROWS] = {7, 8, 9, 10};
-byte colPins[COLS] = {6, 5, 3, 2};
-
-Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
-void setup() {
-  Serial.begin(9600);
-  Keyboard.begin();
-}
-
-void loop() {
-  char key = keypad.getKey();
-
-  if (key) {
-    Keyboard.write(key);
-  }
-}
+            #include &lt;Wire.h&gt;
+            #define SLAVE 4 // 슬레이브 주소
+            void setup() {
+              Wire.begin(); // Wire 라이브러리 초기화
+              Serial.begin(9600); // 직렬 통신 초기화
+              Serial.println("I2C");
+            }
+            void loop() {
+              i2c_communication(); // 슬레이브로 데이터 요구 및 수신 데이터 처리
+              delay(1000);
+            }
+            void i2c_communication() {
+              Wire.requestFrom(SLAVE, 1); // 1 바이트 크기의 데이터 요청
+              char c = Wire.read(); // 수신 데이터 읽기
+              Serial.println(c); // 수신 데이터 출력
+            }
   				</code>
   			</pre>
   		</div>
+      <div class="collapse" id="collapseSlave">
+        <pre>
+          <code class="C++">
+            #include &lt;Wire.h&gt;
+            #define SLAVE 4
+            byte count = 'A'; // 카운터
+            void setup() {
+              // Wire 라이브러리 초기화
+              // 슬레이브로 참여하기 위해서는 주소를 지정해야 한다.
+              Wire.begin(SLAVE);
+              // 마스터의 데이터 전송 요구가 있을 때 처리할 함수 등록
+              Wire.onRequest(sendToMaster);
+            }
+
+            void loop () {
+            }
+
+            void sendToMaster() {
+              Wire.write(++count); // 카운터 값을 증가시키고 마스터로 전송
+
+              if(count >= 'z'){
+                count = 'A';
+              }
+            }
+          </code>
+        </pre>
+      </div>
   	</div>
 
     <!-- Portfolio -->
-      <section class="content-section" id="portfolio">
-        <div class="container">
-          <div class="content-section-heading text-center">
-            <h3 class="text-secondary mb-0">Project</h3>
-            <h2 class="mb-5">다른 프로젝트</h2>
+    <section class="content-section" id="portfolio">
+      <div class="container">
+        <div class="content-section-heading text-center">
+          <h3 class="text-secondary mb-0">Project</h3>
+          <h2 class="mb-5">다른 프로젝트</h2>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="project1.html">
+              <span class="caption">
+                <span class="caption-content">
+                  <h2>홈페이지 제작</h2>
+                  <p class="mb-0">자율동아리 루트만의 홈페이지를 제작하였습니다.</p>
+                </span>
+              </span>
+              <img class="img-fluid" src="img/homepage making.png" alt="">
+            </a>
           </div>
-          <div class="row no-gutters">
-            <div class="col-lg-6">
-              <a class="portfolio-item" href="project1.html">
-                <span class="caption">
-                  <span class="caption-content">
-                    <h2>홈페이지 제작</h2>
-                    <p class="mb-0">자율동아리 루트만의 홈페이지를 제작하였습니다.</p>
-                  </span>
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="https://2018root.github.io/project2.html">
+              <span class="caption">
+                <span class="caption-content">
+                  <h2>라즈베리파이 파일 압축기</h2>
+                  <p class="mb-0">소형컴퓨터인 라즈베리파이를 이용한 파일압축기</p>
                 </span>
-                <img class="img-fluid" src="img/homepage making.png" alt="">
-              </a>
-            </div>
-            <div class="col-lg-6">
-              <a class="portfolio-item" href="project2.html">
-                <span class="caption">
-                  <span class="caption-content">
-                    <h2>keyboard Project</h2>
-                    <p class="mb-0">automatic keylog</p>
-                  </span>
+              </span>
+              <img class="img-fluid" src="img/raz3.png" alt="">
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="https://2018root.github.io/project3.html">
+              <span class="caption">
+                <span class="caption-content">
+                  <h2>아두이노 통신 프로젝트</h2>
+                  <p class="mb-0">오렌지 보드와 우노를 이용한 카이사르 암호 복호화 툴</p>
                 </span>
-                <img class="img-fluid" src="img/keyboard1.PNG" alt="">
-              </a>
-            </div>
-            <div class="col-lg-6">
-              <a class="portfolio-item" href="project3.html">
-                <span class="caption">
-                  <span class="caption-content">
-                    <h2>Trashcan Project</h2>
-                    <p class="mb-0">automatic Trashcan</p>
-                  </span>
+              </span>
+              <img class="img-fluid" src="img/Arduino connection2.png" alt="">
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <a class="portfolio-item" href="https://2018root.github.io/project3.html">
+              <span class="caption">
+                <span class="caption-content">
+                  <h2>칼리리눅스 모의해킹</h2>
+                  <p class="mb-0">칼리리눅스를 이용해 윈도우 payload취약점 공격</p>
                 </span>
-                <img class="img-fluid" src="img/empty_project.jpg" alt="">
-              </a>
-            </div>
-            <div class="col-lg-6">
-              <a class="portfolio-item" href="project4.html">
-                <span class="caption">
-                  <span class="caption-content">
-                    <h2>Trashcan Project</h2>
-                    <p class="mb-0">automatic Trashcan</p>
-                  </span>
-                </span>
-                <img class="img-fluid" src="img/empty_project.jpg" alt="">
-              </a>
-            </div>
+              </span>
+              <img class="img-fluid" src="img/KailLinux2.png" alt="">
+            </a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
   	<div class="container text-center mt-5">
   		<p>Github: <a href="https://github.com/2018root">@2018root</a></p>
