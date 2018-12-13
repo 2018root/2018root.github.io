@@ -23,6 +23,11 @@
     <link href="css/stylish-portfolio.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
 
+  <style>
+  strong{
+    color:#0000FF
+  }
+  </style>
 </head>
 
  <body id="page-top">
@@ -60,17 +65,55 @@
      <div class="container text-center">
        <div class="row">
          <div class="col-lg-10 mx-auto">
+           <h3 class="text-secondary mb-0">Homepage</h3>
            <h2>루트만의 홈페이지 제작</h2>
-           <p class="lead mb-1"> 내용 </p>
+           <p class="lead mb-1"> 루트 홈페이지의 목표 </p>
+           <ul>
+             <li>컴퓨터 정보공유</li>
+             <li>프로그래밍 프로젝트 공유</li>
+             <li>아두이노 프로젝트 공유</li>
+             <li>루트 활동사진 공유</li>
+             <li>루트동아리 <strong>역사</strong> 기록</li>
+             <li>프레너미동아리 프로그래밍 입문도움</li>
+             <li>다양한 프로그래밍 입문자들을 돕기</li>
+           </ul>
          </div>
        </div>
      </div>
    </section>
-
+   <div class="container text-center">
+     <div class="row">
+       <div class="col-lg-10 mx-auto">
+         <h3 class="text-secondary mb-0">Picture</h3>
+         <h2>루트 활동사진</h2>
+       </div>
+     </div>
+   </div>
+   <div class="container mb-5">
+ 		<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+ 			<ol class="carousel-indicators">
+ 				<li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+ 				<li data-target="#carouselIndicators" data-slide-to="1"></li>
+ 				<li data-target="#carouselIndicators" data-slide-to="2"></li>
+ 			</ol>
+ 			<div class="carousel-inner">
+ 				<div class="carousel-item active">
+ 					<img class="d-block w-100" src="img/987AC493-3233-433F-A11A-E3AB37976D7D.jpeg" alt="First slide">
+ 				</div>
+ 				<div class="carousel-item">
+ 					<img class="d-block w-100" src="img/40D39A88-E1FA-4C99-BB31-4807569E2250.jpeg" alt="Second slide">
+ 				</div>
+ 				<div class="carousel-item">
+ 					<img class="d-block w-100" src="img/leetaeju.jpg" alt="Third slide">
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
 
 
     <div class="container">
       <hr>
+      <h3 class="text-secondary mb-0 h3 text-center">Code</h3>
   		<p class="h1 text-center">들어간 코드</p>
   		<div class="text-center mt-3">
   			<button class="btn btn-primary text-center" type="button" data-toggle="collapse" data-target="#collapseHTML5" aria-expanded="false" aria-controls="collapseC">HTML5</button>
@@ -97,9 +140,9 @@
              }  				</code>
   			</pre>
   		</div>
-  		<div class="collapse" id="collapseHTML5">
+  		<div class="collapse" id="collapseJS">
   			<pre>
-  				<code class="HTML5">
+  				<code class="JavaScript">
             (function($) {
               use strict;
 
@@ -160,9 +203,9 @@
   				</code>
   			</pre>
   		</div>
-  		<div class="collapse" id="collapseJS">
+  		<div class="collapse" id="collapseHTML5">
   			<pre>
-  				<code class="JavaScript">
+  				<code class="HTML5">
             &lt;footer class=footer text-center&gt;
               &lt;div class=container&gt;
                 &lt;ul class=list-inline mb-5&gt;
@@ -226,36 +269,36 @@
               </a>
             </div>
             <div class="col-lg-6">
-              <a class="portfolio-item" data-toggle="modal" data-target="#project2-content">
+              <a class="portfolio-item" href="https://2018root.github.io/project2.html">
                 <span class="caption">
                   <span class="caption-content">
-                    <h2>keyboard Project</h2>
-                    <p class="mb-0">automatic keylog</p>
+                    <h2>라즈베리파이 파일 압축기</h2>
+                    <p class="mb-0">소형컴퓨터인 라즈베리파이를 이용한 파일압축기</p>
                   </span>
                 </span>
-                <img class="img-fluid" src="img/keyboard1.PNG" alt="">
+                <img class="img-fluid" src="img/raz3.png" alt="">
               </a>
             </div>
             <div class="col-lg-6">
-              <a class="portfolio-item" data-toggle="modal" data-target="#project3-content">
+              <a class="portfolio-item" href="https://2018root.github.io/project3.html">
                 <span class="caption">
                   <span class="caption-content">
-                    <h2>Trashcan Project</h2>
-                    <p class="mb-0">automatic Trashcan</p>
+                    <h2>아두이노 통신 프로젝트</h2>
+                    <p class="mb-0">오렌지 보드와 우노를 이용한 카이사르 암호 복호화 툴</p>
                   </span>
                 </span>
-                <img class="img-fluid" src="img/empty_project.jpg" alt="">
+                <img class="img-fluid" src="img/Arduino connection2.png" alt="">
               </a>
             </div>
             <div class="col-lg-6">
-              <a class="portfolio-item" data-toggle="modal" data-target="#project4-content">
+              <a class="portfolio-item" href="https://2018root.github.io/project3.html">
                 <span class="caption">
                   <span class="caption-content">
-                    <h2>Trashcan Project</h2>
-                    <p class="mb-0">automatic Trashcan</p>
+                    <h2>칼리리눅스 모의해킹</h2>
+                    <p class="mb-0">칼리리눅스를 이용해 윈도우 payload취약점 공격</p>
                   </span>
                 </span>
-                <img class="img-fluid" src="img/empty_project.jpg" alt="">
+                <img class="img-fluid" src="img/KailLinux2.png" alt="">
               </a>
             </div>
           </div>
